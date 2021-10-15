@@ -1,10 +1,11 @@
 from .models import Book
 import json
+from django.http import HttpResponse
 
 # Create your views here.
 
 
-def books():
+def books(request):
     books_list = Book.objects.order_by("title").all()
     books = [
         {
@@ -12,8 +13,8 @@ def books():
             "title": book.title,
             "publisher_company": book.publish_company,
             "photo": book.photo,
-            "authors": [author.name for author in book.author],
+            "authors": book.author,
         }
         for book in books_list
     ]
-    return json.dumps(books)
+    return HttpResponse(content=books , headers={"content-type": 'application/json'})
