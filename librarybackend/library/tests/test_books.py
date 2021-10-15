@@ -4,5 +4,6 @@ from model_bakery import baker
 
 
 def book(client, db):
-    
+    pass
+
 

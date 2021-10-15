@@ -2,6 +2,10 @@
 # Created by https://www.toptal.com/developers/gitignore/api/python,django,intellij+all,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,django,intellij+all,visualstudiocode
 
+#docker database data
+.data/*
+**.data
+
 ### Django ###
 *.log
 *.pot
