@@ -9,6 +9,7 @@ def book(db):
     return baker.make(Book, _bulk_create=True, _quantity=3)
 
 
+
 @pytest.fixture
 def resp(client, book):
     resp_book = client.get(reverse("library:books"), kwargs={"book": book})
