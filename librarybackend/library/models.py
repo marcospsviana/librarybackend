@@ -8,25 +8,26 @@ class PublishCompany(models.Model):
     name = models.CharField(max_length=200, null=False)
 
     class Meta:
-        ordering = ['name']
-        verbose_name_plural = 'names'
+        ordering = ["name"]
+        verbose_name_plural = "names"
+
 
 class Author(models.Model):
     id = models.IntegerField(primary_key=True, unique=True)
     name = models.CharField(max_length=200, null=False)
 
     class Meta:
-        ordering = ['name']
-        verbose_name_plural = 'names'
+        ordering = ["name"]
+        verbose_name_plural = "names"
 
 
 class Book(models.Model):
     id = models.IntegerField(primary_key=True, unique=True)
     title = models.CharField(max_length=200, null=False)
-    photo = models.ImageField(name='image')
+    photo = models.URLField(verbose_name="book_cover", max_length=500, null=True)
     author = models.ManyToManyField(Author)
     publish_company = models.ManyToManyField(PublishCompany)
 
     class Meta:
-        ordering = ['title']
-        verbose_name_plural = 'titles'
+        ordering = ["title"]
+        verbose_name_plural = "titles"

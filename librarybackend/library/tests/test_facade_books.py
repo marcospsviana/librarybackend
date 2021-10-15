@@ -11,4 +11,3 @@ def books(db):
 
 def test_list_ordered_books(books):
     assert list(sorted(books, key=lambda book: book.title)) == list_all_books()
-

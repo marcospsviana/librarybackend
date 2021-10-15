@@ -1,4 +1,5 @@
 from .models import Book
+import json
 
 # Create your views here.
 
@@ -13,4 +14,6 @@ def books():
             "photo": book.photo,
             "authors": [author.name for author in book.author],
         }
+        for book in books_list
     ]
+    return json.dumps(books)
