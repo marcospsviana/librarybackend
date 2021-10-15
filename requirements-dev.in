@@ -3,3 +3,7 @@ pytest
 pytest-django
 flake8
 black
+pytest-cov
+codecov
+django-debug-toolbar
+model-bakery
