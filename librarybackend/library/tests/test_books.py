@@ -12,7 +12,7 @@ def book(db):
 
 @pytest.fixture
 def resp(client, book):
-    resp_book = client.get(reverse("library:books"), kwargs={"book": book})
+    resp_book = client.get(reverse("library:Books"), kwargs={"book": book})
     return resp_book
 
 
