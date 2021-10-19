@@ -11,3 +11,10 @@ def books(db):
 
 def test_list_ordered_books(books):
     assert list(sorted(books, key=lambda book: book.title)) == list_all_books()
+
+
+def test_book_by_id(books):
+    id = 0
+    for book in books:
+        id += 1
+        assert book.id == id

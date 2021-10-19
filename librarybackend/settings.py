@@ -52,6 +52,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "librarybackend.urls"
+APPEND_SLASH=False
 
 TEMPLATES = [
     {
