@@ -6,13 +6,17 @@ from model_bakery import baker
 
 @pytest.fixture
 def book(db):
-    return baker.make(Book, _bulk_create=True, _quantity=3)
-
+    return baker.make(Book, _bulk_create=True)
 
 
 @pytest.fixture
-def resp(client, book):
-    resp_book = client.get(reverse("library:Books"), kwargs={"book": book})
+def books(db):
+    return baker.make(Book, _bulk_create=True, _quantity=3)
+
+
+@pytest.fixture
+def resp(client, books):
+    resp_book = client.get(reverse("library:books"), kwargs={"book": book})
     return resp_book
 
 
@@ -20,13 +24,13 @@ def test_status_code_200_endpoint_books(client, resp):
     assert resp.status_code == 200
 
 
-def test_response_data_book_list(resp, book):
-    for b in book:
-        assert (resp, b.title)
+def test_response_data_book_list(resp, books):
+    for b in books:
+        assert resp, b.title
 
 
-def test_response_data_book_json(resp, book):
-    for b in book:
+def test_response_data_book_json(resp, books):
+    for b in books:
         assert (
             resp,
             {
@@ -39,5 +43,15 @@ def test_response_data_book_json(resp, book):
         )
 
 
-def test_len_list_books(resp, book):
-    assert 3 == len(book)
+def test_len_list_books(resp, books):
+    assert 3 == len(books)
+
+
+@pytest.mark.django_db
+def test_delete_book():
+    book = Book.objects.create(title="Um livro de teste")
+    assert book.title == "Um livro de teste"
+    book = Book.objects.get(title=book.title).delete()
+    assert book == (1, {"library.Book": 1})
+    book = Book.objects.all()
+    assert len(book) == 0
