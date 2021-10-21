@@ -8,4 +8,3 @@ def list_all_books() -> List[Book]:
 
 def book_by_id(id) -> Book:
     return Book.objects.filter(id=id).first()
-
