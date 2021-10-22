@@ -1,3 +1,7 @@
-# from django.contrib import admin
+from django.contrib import admin
+from .models import PublishCompany
 
-# Register your models here.
+
+@admin.register(PublishCompany)
+class AdminPublishCompany(admin.ModelAdmin):
+    fields = ["name"]

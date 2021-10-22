@@ -50,8 +50,10 @@ def test_len_list_books(resp, books):
 @pytest.mark.django_db
 def test_delete_book():
     book = Book.objects.create(title="Um livro de teste")
+    query = Book.objects.all()
+    assert len(query) == 1
     assert book.title == "Um livro de teste"
     book = Book.objects.get(title=book.title).delete()
     assert book == (1, {"library.Book": 1})
-    book = Book.objects.all()
-    assert len(book) == 0
+    query = Book.objects.all()
+    assert len(query) == 0
