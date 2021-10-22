@@ -57,3 +57,4 @@ def test_delete_book():
     assert book == (1, {"library.Book": 1})
     query = Book.objects.all()
     assert len(query) == 0
+
