@@ -1,7 +1,9 @@
 from .models import Book, Author, PublishCompany
+
 from django.http import HttpResponse
 from django.views import View
 import json
+
 
 class Books(View):
     def get(self, request):
