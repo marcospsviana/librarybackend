@@ -31,16 +31,13 @@ def test_response_data_book_list(resp, books):
 
 def test_response_data_book_json(resp, books):
     for b in books:
-        assert (
-            resp,
-            {
-                "id": b.id,
-                "title": b.title,
-                "publisher_company": b.publish_company,
-                "photo": b.photo,
-                "authors": b.author,
-            },
-        )
+        assert resp, {
+            "id": b.id,
+            "title": b.title,
+            "publisher_company": b.publish_company,
+            "photo": b.photo,
+            "authors": b.author,
+        }
 
 
 def test_len_list_books(resp, books):
@@ -57,4 +54,3 @@ def test_delete_book():
     assert book == (1, {"library.Book": 1})
     query = Book.objects.all()
     assert len(query) == 0
-
