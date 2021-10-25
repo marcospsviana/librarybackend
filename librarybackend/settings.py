@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
+# import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -75,6 +77,9 @@ WSGI_APPLICATION = "librarybackend.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+default_db = BASE_DIR / "db.sqlite3"
+
+DATABASE_URL = config("DATABASE_URL", default=default_db)
 
 DATABASES = {
     "default": {

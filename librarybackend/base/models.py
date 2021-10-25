@@ -15,9 +15,9 @@ class UserManager(BaseUserManager):
         """
         Create and save a user with the given email, and password.
         """
-
+        if not email:
+            raise ValueError("The given email must be set")
         email = self.normalize_email(email)
-
         user = self.model(email=email, **extra_fields)
         user.password = make_password(password)
         user.save(using=self._db)
@@ -93,7 +93,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     date_joined = models.DateTimeField(_("date joined"), default=timezone.now)
 
-    # objects = UserManager()
+    objects = UserManager()
 
     EMAIL_FIELD = "email"
     USERNAME_FIELD = "email"
