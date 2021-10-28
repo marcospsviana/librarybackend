@@ -5,6 +5,11 @@ import json
 
 
 class Books(View):
+    
+    def get_all_authors(self):
+        authors = Author.objects.select_related('author').where(id=1)
+        print(authors.values)
+
     def get(self, request):
         books_list = Publications.objects.all()
 
@@ -16,10 +21,12 @@ class Books(View):
                     name=book.publish_company
                 ).name,
                 "photo": book.book.photo,
-                "authors": Author.objects.get(name=book.author).name,
+                "authors": book.author.all(),
             }
+            
             for book in books_list
         ]
+
         return HttpResponse(content=books, headers={"content-type": "application/json"})
 
     def post(self, request):
@@ -37,7 +44,10 @@ class Books(View):
             }
             for book in books_list
         ]
+        get_all_authors()
         return HttpResponse(content=books, headers={"content-type": "application/json"})
+    
+    
 
 
 class BookDelete(View):
