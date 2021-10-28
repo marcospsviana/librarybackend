@@ -7,19 +7,23 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('library', '0002_alter_model_publication_author'),
+        ("library", "0002_alter_model_publication_author"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='book',
-            name='author',
-            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.CASCADE, to='library.author'),
+            model_name="book",
+            name="author",
+            field=models.ForeignKey(
+                default=1,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="library.author",
+            ),
             preserve_default=False,
         ),
         migrations.AlterField(
-            model_name='publications',
-            name='author',
-            field=models.ManyToManyField(related_name='author', to='library.Author'),
+            model_name="publications",
+            name="author",
+            field=models.ManyToManyField(related_name="author", to="library.Author"),
         ),
     ]

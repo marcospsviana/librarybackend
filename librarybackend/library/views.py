@@ -1,14 +1,10 @@
-from .models import Book, Author, PublishCompany, Publications
+from .models import Book, PublishCompany, Publications
 from django.http import HttpResponse
 from django.views import View
 import json
 
 
 class Books(View):
-    
-    def get_all_authors(self):
-        authors = Author.objects.select_related('author').where(id=1)
-        print(authors.values)
 
     def get(self, request):
         books_list = Publications.objects.all()
@@ -23,7 +19,6 @@ class Books(View):
                 "photo": book.book.photo,
                 "authors": book.author.all(),
             }
-            
             for book in books_list
         ]
 
@@ -44,10 +39,7 @@ class Books(View):
             }
             for book in books_list
         ]
-        get_all_authors()
         return HttpResponse(content=books, headers={"content-type": "application/json"})
-    
-    
 
 
 class BookDelete(View):

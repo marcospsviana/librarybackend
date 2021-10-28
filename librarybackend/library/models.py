@@ -1,7 +1,4 @@
 from django.db import models
-from django.db.models import ManyToManyRel
-
-# Create your models here.
 
 
 class PublishCompany(models.Model):
@@ -43,10 +40,12 @@ class Book(models.Model):
 
 
 class Publications(models.Model):
-    id = models.IntegerField(auto_created=True, primary_key=True, unique=True, blank=True)
+    id = models.IntegerField(
+        auto_created=True, primary_key=True, unique=True, blank=True
+    )
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     publish_company = models.ForeignKey(PublishCompany, on_delete=models.CASCADE)
-    author = models.ManyToManyField(Author, related_name='author')
+    author = models.ManyToManyField(Author, related_name="author")
 
     def __str__(self):
         return f"{self.book}"

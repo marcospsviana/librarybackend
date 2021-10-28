@@ -8,53 +8,96 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Author',
+            name="Author",
             fields=[
-                ('id', models.IntegerField(auto_created=True, primary_key=True, serialize=False, unique=True)),
-                ('name', models.CharField(max_length=200)),
+                (
+                    "id",
+                    models.IntegerField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        unique=True,
+                    ),
+                ),
+                ("name", models.CharField(max_length=200)),
             ],
             options={
-                'verbose_name_plural': 'Authors',
-                'ordering': ['name'],
+                "verbose_name_plural": "Authors",
+                "ordering": ["name"],
             },
         ),
         migrations.CreateModel(
-            name='Book',
+            name="Book",
             fields=[
-                ('id', models.IntegerField(auto_created=True, primary_key=True, serialize=False, unique=True)),
-                ('title', models.CharField(max_length=200)),
-                ('photo', models.URLField(max_length=500, null=True, verbose_name='book_cover')),
+                (
+                    "id",
+                    models.IntegerField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        unique=True,
+                    ),
+                ),
+                ("title", models.CharField(max_length=200)),
+                (
+                    "photo",
+                    models.URLField(
+                        max_length=500, null=True, verbose_name="book_cover"
+                    ),
+                ),
             ],
             options={
-                'verbose_name_plural': 'Books',
-                'ordering': ['title'],
+                "verbose_name_plural": "Books",
+                "ordering": ["title"],
             },
         ),
         migrations.CreateModel(
-            name='PublishCompany',
+            name="PublishCompany",
             fields=[
-                ('id', models.IntegerField(primary_key=True, serialize=False, unique=True)),
-                ('name', models.CharField(max_length=200)),
+                (
+                    "id",
+                    models.IntegerField(primary_key=True, serialize=False, unique=True),
+                ),
+                ("name", models.CharField(max_length=200)),
             ],
             options={
-                'verbose_name_plural': 'Publishers',
-                'ordering': ['name'],
+                "verbose_name_plural": "Publishers",
+                "ordering": ["name"],
             },
         ),
         migrations.CreateModel(
-            name='Publications',
+            name="Publications",
             fields=[
-                ('id', models.IntegerField(auto_created=True, blank=True, primary_key=True, serialize=False, unique=True)),
-                ('book', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='library.book')),
-                ('publish_company', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='library.publishcompany')),
+                (
+                    "id",
+                    models.IntegerField(
+                        auto_created=True,
+                        blank=True,
+                        primary_key=True,
+                        serialize=False,
+                        unique=True,
+                    ),
+                ),
+                (
+                    "book",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE, to="library.book"
+                    ),
+                ),
+                (
+                    "publish_company",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="library.publishcompany",
+                    ),
+                ),
             ],
             options={
-                'verbose_name_plural': 'Publications',
+                "verbose_name_plural": "Publications",
             },
         ),
     ]
