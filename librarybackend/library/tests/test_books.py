@@ -1,22 +1,37 @@
 from django.shortcuts import reverse
 import pytest
-from librarybackend.library.models import Book
+from librarybackend.library.models import Publications, Author, PublishCompany, Book
 from model_bakery import baker
 
 
 @pytest.fixture
-def book(db):
-    return baker.make(Book, _bulk_create=True)
+def publication(db):
+    book_set = baker.prepare(Book, _quantity=3, _save_related=True)
+    company_set = baker.prepare(PublishCompany, _quantity=3, _save_related=True)
+    authors_set = baker.prepare(Author, _quantity=3, _save_related=True)
+    return baker.make(Book)
 
 
 @pytest.fixture
-def books(db):
-    return baker.make(Book, _bulk_create=True, _quantity=3)
+def publications(db):
+    # book_set = baker.prepare(Book, _quantity=3, _save_related=True)
+    # company_set = baker.prepare(PublishCompany, _quantity=3, _save_related=True)
+    authors_set = baker.prepare(Author, _quantity=3, _save_related=True)
+    return baker.make(
+        Publications,
+        _bulk_create=True,
+        make_m2m=True,
+        author=authors_set,
+        book=baker.make(Book),
+        publish_company=baker.make(PublishCompany),
+    )
 
 
 @pytest.fixture
-def resp(client, books):
-    resp_book = client.get(reverse("library:books"), kwargs={"book": book})
+def resp(client, publication, db):
+    resp_book = client.get(
+        reverse("library:books"), kwargs={"publications": publication}
+    )
     return resp_book
 
 
@@ -24,12 +39,12 @@ def test_status_code_200_endpoint_books(client, resp):
     assert resp.status_code == 200
 
 
-def test_response_data_book_list(resp, books):
-    for b in books:
+def test_response_data_book_list(resp, publications):
+    for b in publications:
         assert resp, b.title
 
 
-def test_response_data_book_json(resp, books):
+def test_response_data_book_json(resp, publications):
     for b in books:
         assert resp, {
             "id": b.id,
@@ -40,7 +55,7 @@ def test_response_data_book_json(resp, books):
         }
 
 
-def test_len_list_books(resp, books):
+def test_len_list_books(resp, publications):
     assert 3 == len(books)
 
 

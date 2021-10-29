@@ -1,5 +1,3 @@
-from ctypes import Array
-
 from .models import Book, PublishCompany, Publications
 from django.http import HttpResponse
 from django.views import View
@@ -7,21 +5,18 @@ import json
 
 
 class Books(View):
-
     def get(self, request):
         books_list = Publications.objects.all()
 
         books = [
             {
-                "id": book.id,
-                "title": book.book.title,
-                "publisher_company": PublishCompany.objects.get(
-                    name=book.publish_company
-                ).name,
-                "photo": book.book.photo,
-                "authors": book.author.all(),
+                "id": publication.id,
+                "title": publication.book.title,
+                "publisher_company": publication.publish_company,
+                "photo": publication.book.photo,
+                "authors": publication.author.select_related(),
             }
-            for book in books_list
+            for publication in books_list
         ]
 
         return HttpResponse(content=books, headers={"content-type": "application/json"})
