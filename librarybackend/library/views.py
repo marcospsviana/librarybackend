@@ -45,7 +45,6 @@ class BookDelete(View):
         return HttpResponse(content=id, headers={"content-type": "application/json"})
 
     def put(self, request, id):
-        array = Array()
         if Book.objects.filter(id=id).exists():
             book = Book.objects.filter(id=id)
 

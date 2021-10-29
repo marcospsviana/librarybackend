@@ -6,9 +6,9 @@ from model_bakery import baker
 
 @pytest.fixture
 def publication(db):
-    book_set = baker.prepare(Book, _quantity=3, _save_related=True)
-    company_set = baker.prepare(PublishCompany, _quantity=3, _save_related=True)
-    authors_set = baker.prepare(Author, _quantity=3, _save_related=True)
+    # book_set = baker.prepare(Book, _quantity=3, _save_related=True)
+    # company_set = baker.prepare(PublishCompany, _quantity=3, _save_related=True)
+    # authors_set = baker.prepare(Author, _quantity=3, _save_related=True)
     return baker.make(Book)
 
 
@@ -40,7 +40,7 @@ def test_status_code_200_endpoint_books(client, resp):
 
 
 def test_response_data_book_list(resp, publication):
-    
+
     assert resp, publication.title
 
 
@@ -53,13 +53,13 @@ def test_response_data_book_json(resp, publication):
     #         "photo": b.photo,
     #         "authors": b.author,
     #     }
-     assert resp, {
-            "id": publication.id,
-            "title": publication.title,
-            "publisher_company": publication.publish_company,
-            "photo": publication.photo,
-            "authors": publication.author,
-        }
+    assert resp, {
+        "id": publication.id,
+        "title": publication.title,
+        "publisher_company": publication.publish_company,
+        "photo": publication.photo,
+        "authors": publication.author,
+    }
 
 
 def test_len_list_books(resp, publication):

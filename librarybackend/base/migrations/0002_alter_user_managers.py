@@ -7,14 +7,14 @@ import librarybackend.base.models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('base', '0001_create_user_model'),
+        ("base", "0001_create_user_model"),
     ]
 
     operations = [
         migrations.AlterModelManagers(
-            name='user',
+            name="user",
             managers=[
-                ('objects', librarybackend.base.models.UserManager()),
+                ("objects", librarybackend.base.models.UserManager()),
             ],
         ),
     ]
