@@ -14,9 +14,9 @@ class AdminAuthor(admin.ModelAdmin):
 
 @admin.register(Book)
 class AdminBook(admin.ModelAdmin):
-    fields = ["id", "title", "photo"]
+    fields = ["title", "photo"]
 
 
 @admin.register(Publications)
 class AdminPublications(admin.ModelAdmin):
-    fields = ["book", "publish_company", "author"]
+    fields = ["id", "book", "publish_company", "author"]
