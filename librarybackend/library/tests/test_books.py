@@ -28,7 +28,7 @@ def publications(db):
 
 
 @pytest.fixture
-def resp(client, publication, db):
+def resp(client, publication):
     resp_book = client.get(
         reverse("library:books"), kwargs={"publications": publication}
     )
@@ -39,29 +39,36 @@ def test_status_code_200_endpoint_books(client, resp):
     assert resp.status_code == 200
 
 
-def test_response_data_book_list(resp, publications):
-    for b in publications:
-        assert resp, b.title
+def test_response_data_book_list(resp, publication):
+    
+    assert resp, publication.title
 
 
-def test_response_data_book_json(resp, publications):
-    for b in books:
-        assert resp, {
-            "id": b.id,
-            "title": b.title,
-            "publisher_company": b.publish_company,
-            "photo": b.photo,
-            "authors": b.author,
+def test_response_data_book_json(resp, publication):
+    # for b in books:
+    #     assert resp, {
+    #         "id": b.id,
+    #         "title": b.title,
+    #         "publisher_company": b.publish_company,
+    #         "photo": b.photo,
+    #         "authors": b.author,
+    #     }
+     assert resp, {
+            "id": publication.id,
+            "title": publication.title,
+            "publisher_company": publication.publish_company,
+            "photo": publication.photo,
+            "authors": publication.author,
         }
 
 
-def test_len_list_books(resp, publications):
-    assert 3 == len(books)
+def test_len_list_books(resp, publication):
+    assert 1 == len([publication])
 
 
 @pytest.mark.django_db
 def test_delete_book():
-    book = Book.objects.create(title="Um livro de teste")
+    book = Book.objects.create(title="Um livro de teste", author=baker.make(Author))
     query = Book.objects.all()
     assert len(query) == 1
     assert book.title == "Um livro de teste"
