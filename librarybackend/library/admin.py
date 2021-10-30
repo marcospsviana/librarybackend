@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import PublishCompany, Author, Book, Publications
+from .models import Publisher, Author, Book, Publication
 
 
-@admin.register(PublishCompany)
-class AdminPublishCompany(admin.ModelAdmin):
+@admin.register(Publisher)
+class AdminPublisher(admin.ModelAdmin):
     fields = ["name"]
 
 
@@ -17,6 +17,6 @@ class AdminBook(admin.ModelAdmin):
     fields = ["title", "photo"]
 
 
-@admin.register(Publications)
-class AdminPublications(admin.ModelAdmin):
-    fields = ["id", "book", "publish_company", "author"]
+@admin.register(Publication)
+class AdminPublication(admin.ModelAdmin):
+    fields = ["book", "publish_company", "authors"]

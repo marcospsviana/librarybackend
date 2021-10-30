@@ -1,6 +1,6 @@
 from django.shortcuts import reverse
 import pytest
-from librarybackend.library.models import Publications, Author, PublishCompany, Book
+from librarybackend.library.models import Publication, Author, PublishCompany, Book
 from model_bakery import baker
 
 
@@ -18,7 +18,7 @@ def publications(db):
     # company_set = baker.prepare(PublishCompany, _quantity=3, _save_related=True)
     authors_set = baker.prepare(Author, _quantity=3, _save_related=True)
     return baker.make(
-        Publications,
+        Publication,
         _bulk_create=True,
         make_m2m=True,
         author=authors_set,

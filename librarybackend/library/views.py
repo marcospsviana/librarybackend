@@ -1,25 +1,27 @@
-from .models import Book, PublishCompany, Publications
-from django.http import HttpResponse
+from .models import Book, Publisher, Publication
+from django.http import HttpResponse, JsonResponse
 from django.views import View
 import json
 
 
 class Books(View):
     def get(self, request):
-        books_list = Publications.objects.all()
+        books_list = Publication.objects.select_related("book", 'publish_company' ).prefetch_related(
+            "authors"
+        )
 
         books = [
             {
                 "id": publication.id,
                 "title": publication.book.title,
-                "publisher_company": publication.publish_company,
+                "publisher_company": publication.publish_company.name,
                 "photo": publication.book.photo,
-                "authors": publication.author.select_related(),
+                "authors": [a.name for a in publication.authors.all()],
             }
             for publication in books_list
         ]
 
-        return HttpResponse(content=books, headers={"content-type": "application/json"})
+        return JsonResponse(data=books, safe=False)
 
     def post(self, request):
         # if request.method == 'GET':
@@ -28,7 +30,7 @@ class Books(View):
             {
                 "id": 1,
                 "title": book.title,
-                "publisher_company": PublishCompany.objects.get(
+                "publisher_company": Publisher.objects.get(
                     name=book.publish_company
                 ).name,
                 "photo": f"{book.photo}",
@@ -66,9 +68,9 @@ class BookDelete(View):
             # author = Author.objects.get(name=data_get["author"])
 
             data_save.author.set(data_get["author"])
-            # company = PublishCompany(name=data_get["publish_company"])
+            # company = Publisher(name=data_get["publish_company"])
             # company.save()
-            # company = PublishCompany.objects.filter(
+            # company = Publisher.objects.filter(
             #     name=data_get["publis_company"]
             # ).first()
             data_save.publish_company.set(data_get["publish_company"])

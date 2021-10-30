@@ -1,8 +1,7 @@
 from django.db import models
 
 
-class PublishCompany(models.Model):
-    id = models.IntegerField(primary_key=True, unique=True)
+class Publisher(models.Model):
     name = models.CharField(max_length=200, null=False)
 
     def __str__(self):
@@ -14,11 +13,11 @@ class PublishCompany(models.Model):
 
 
 class Author(models.Model):
-    id = models.IntegerField(auto_created=True, primary_key=True, unique=True)
+
     name = models.CharField(max_length=200, null=False)
 
     def __str__(self):
-        return f"{self.name}"
+        return self.name
 
     class Meta:
         ordering = ["name"]
@@ -26,7 +25,7 @@ class Author(models.Model):
 
 
 class Book(models.Model):
-    id = models.IntegerField(auto_created=True, primary_key=True, unique=True)
+
     title = models.CharField(max_length=200, null=False)
     photo = models.URLField(verbose_name="book_cover", max_length=500, null=True)
     author = models.ForeignKey(Author, on_delete=models.CASCADE)
@@ -39,13 +38,11 @@ class Book(models.Model):
         verbose_name_plural = "Books"
 
 
-class Publications(models.Model):
-    id = models.IntegerField(
-        auto_created=True, primary_key=True, unique=True, blank=True
-    )
+class Publication(models.Model):
+
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
-    publish_company = models.ForeignKey(PublishCompany, on_delete=models.CASCADE)
-    author = models.ManyToManyField(Author, related_name="author")
+    publish_company = models.ForeignKey(Publisher, on_delete=models.CASCADE)
+    authors = models.ManyToManyField(Author, related_name="publications")
 
     def __str__(self):
         return f"{self.book}"
