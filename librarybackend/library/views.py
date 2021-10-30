@@ -6,7 +6,7 @@ import json
 
 class Books(View):
     def get(self, request):
-        books_list = Publication.objects.select_related("book", 'publish_company' ).prefetch_related(
+        books_list = Publication.objects.select_related("book", 'publish_company').prefetch_related(
             "authors"
         )
 
